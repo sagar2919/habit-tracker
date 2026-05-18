@@ -11,7 +11,7 @@ const completionService = new CompletionService();
 router.post('/:id/completions', async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
   try {
     const completion = await completionService.markComplete(
-      req.user!.id,
+      (req as any).user.id,
       req.params.id,
       req.body.date
     );
@@ -28,7 +28,7 @@ router.post('/:id/completions', async (req: Request<{ id: string }>, res: Respon
 router.delete('/:id/completions/:date', async (req: Request<{ id: string; date: string }>, res: Response, next: NextFunction) => {
   try {
     await completionService.unmarkComplete(
-      req.user!.id,
+      (req as any).user.id,
       req.params.id,
       req.params.date
     );

@@ -10,7 +10,7 @@ const habitService = new HabitService();
  */
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const habits = await habitService.getAll(req.user!.id);
+    const habits = await habitService.getAll((req as any).user.id);
     res.status(200).json(habits);
   } catch (err) {
     next(err);
@@ -23,7 +23,7 @@ router.get('/', async (req: Request, res: Response, next: NextFunction) => {
  */
 router.get('/:id', async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
   try {
-    const habit = await habitService.getById(req.user!.id, req.params.id);
+    const habit = await habitService.getById((req as any).user.id, req.params.id);
     if (!habit) {
       res.status(404).json({ error: 'NOT_FOUND', message: 'Habit not found' });
       return;
@@ -40,7 +40,7 @@ router.get('/:id', async (req: Request<{ id: string }>, res: Response, next: Nex
  */
 router.post('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const habit = await habitService.create(req.user!.id, req.body);
+    const habit = await habitService.create((req as any).user.id, req.body);
     res.status(201).json(habit);
   } catch (err) {
     next(err);
@@ -53,7 +53,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
  */
 router.put('/:id', async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
   try {
-    const habit = await habitService.update(req.user!.id, req.params.id, req.body);
+    const habit = await habitService.update((req as any).user.id, req.params.id, req.body);
     res.status(200).json(habit);
   } catch (err) {
     next(err);
@@ -66,7 +66,7 @@ router.put('/:id', async (req: Request<{ id: string }>, res: Response, next: Nex
  */
 router.delete('/:id', async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
   try {
-    await habitService.delete(req.user!.id, req.params.id);
+    await habitService.delete((req as any).user.id, req.params.id);
     res.status(204).send();
   } catch (err) {
     next(err);

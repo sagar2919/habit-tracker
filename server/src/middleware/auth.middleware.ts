@@ -53,7 +53,7 @@ export async function authMiddleware(
       return;
     }
 
-    req.user = user;
+    (req as any).user = user;
     next();
   } catch {
     res.status(401).json({

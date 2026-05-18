@@ -41,7 +41,7 @@ router.get('/habits/:id/analytics', async (req: Request<{ id: string }>, res: Re
  */
 router.get('/analytics/dashboard', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const summary = await analyticsService.getDashboardSummary(req.user!.id);
+    const summary = await analyticsService.getDashboardSummary((req as any).user.id);
     res.status(200).json(summary);
   } catch (err) {
     next(err);
@@ -68,7 +68,7 @@ router.get('/habits/:id/heatmap', async (req: Request<{ id: string }>, res: Resp
  */
 router.get('/analytics/weekly-summary', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const weeklySummary = await analyticsService.getWeeklySummary(req.user!.id);
+    const weeklySummary = await analyticsService.getWeeklySummary((req as any).user.id);
     res.status(200).json(weeklySummary);
   } catch (err) {
     next(err);
